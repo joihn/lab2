@@ -42,7 +42,7 @@ public class Main {
                 System.out.println("--------------------------------------------");
                 System.out.println("Help:");
                 System.out.println("--------------------------------------------");
-                System.out.println("-a: Maze with alternatives (default)");
+                System.out.println("-a: Maze with alternatives (defaault)");
                 System.out.println("-n: Maze without alternatives");
                 System.out.println("-s: Simple maze (Only walls)");
                 System.out.println("-o: Office like maze");
