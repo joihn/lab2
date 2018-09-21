@@ -70,21 +70,22 @@ public class CustomGraphSearch implements SearchObject {
 		else {
 			System.out.println("Wszedłem DFS");
 			while(!frontier.isEmpty()){
-				if(p.isGoalState(frontier.peekAtFront().getState())){
-					path = frontier.peekAtFront().getPathFromRoot();
+				SearchNode temp_current = frontier.removeLast();
+				if(p.isGoalState(temp_current.getState())){
+					path = temp_current.getPathFromRoot();
 					return path;
 				}
-				childStates = p.getReachableStatesFrom(frontier.peekAtFront().getState());
+				childStates = p.getReachableStatesFrom(temp_current.getState());
 
 				for(int i =0;i<childStates.size();i++) {
-					SearchNode temp = new SearchNode(childStates.get(i),frontier.peekAtFront());
+					SearchNode temp = new SearchNode(childStates.get(i),temp_current);
 					if(!explored.contains(temp)&&!frontier.contains(temp)){
-						frontier.addNodeToBack(new SearchNode(childStates.get(i),frontier.peekAtFront()));
+						frontier.addNodeToBack(new SearchNode(childStates.get(i),temp_current));
 						System.out.println("X: " + childStates.get(i).m_x+ " Y: "+ childStates.get(i).m_y);
 						System.out.println("Frontier size" +frontier.size());
 					}
 				}
-				explored.add(frontier.removeFirst());
+				explored.add(temp_current);
 
 			}
 		}
