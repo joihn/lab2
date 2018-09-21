@@ -46,10 +46,14 @@ public class CustomGraphSearch implements SearchObject {
 
 		System.out.println("Start X: " + startState.m_x+ " Start Y: "+ startState.m_y);
 
-		if(insertFront) //BFS
-			System.out.println("Wszedłem");
+		if(insertFront){ //BFS
+			System.out.println("Wszedłem BFS");
 			 while(!frontier.isEmpty()){
-			 	childStates = p.getReachableStatesFrom(frontier.peekAtFront().getState());
+				 if(p.isGoalState(frontier.peekAtFront().getState())){
+					 path = frontier.peekAtFront().getPathFromRoot();
+					 return path;
+				 }
+			 	 childStates = p.getReachableStatesFrom(frontier.peekAtFront().getState());
 
 				 for(int i =0;i<childStates.size();i++) {
 					 SearchNode temp = new SearchNode(childStates.get(i),frontier.peekAtFront());
@@ -59,8 +63,31 @@ public class CustomGraphSearch implements SearchObject {
 					 	System.out.println("Frontier size" +frontier.size());
 			 		}
 				 }
+				 explored.add(frontier.removeFirst());
 
 			 }
+		}
+		else {
+			System.out.println("Wszedłem DFS");
+			while(!frontier.isEmpty()){
+				if(p.isGoalState(frontier.peekAtFront().getState())){
+					path = frontier.peekAtFront().getPathFromRoot();
+					return path;
+				}
+				childStates = p.getReachableStatesFrom(frontier.peekAtFront().getState());
+
+				for(int i =0;i<childStates.size();i++) {
+					SearchNode temp = new SearchNode(childStates.get(i),frontier.peekAtFront());
+					if(!explored.contains(temp)&&!frontier.contains(temp)){
+						frontier.addNodeToBack(new SearchNode(childStates.get(i),frontier.peekAtFront()));
+						System.out.println("X: " + childStates.get(i).m_x+ " Y: "+ childStates.get(i).m_y);
+						System.out.println("Frontier size" +frontier.size());
+					}
+				}
+				explored.add(frontier.removeFirst());
+
+			}
+		}
 
 		/* Some hints:
 		 * -Read early part of chapter 3 in the book!
