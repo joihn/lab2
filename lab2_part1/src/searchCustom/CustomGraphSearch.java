@@ -58,7 +58,11 @@ public class CustomGraphSearch implements SearchObject {
 				 for(int i =0;i<childStates.size();i++) {
 					 SearchNode temp = new SearchNode(childStates.get(i),frontier.peekAtFront());
 					if(!explored.contains(temp)&&!frontier.contains(temp)){
-				 		frontier.addNodeToBack(new SearchNode(childStates.get(i),frontier.peekAtFront()));
+				 		if(p.isGoalState(temp.getState())){
+							path = temp.getPathFromRoot();
+							return path;
+						}
+						frontier.addNodeToBack(temp);
 				 		System.out.println("X: " + childStates.get(i).m_x+ " Y: "+ childStates.get(i).m_y);
 					 	System.out.println("Frontier size" +frontier.size());
 			 		}
@@ -80,6 +84,10 @@ public class CustomGraphSearch implements SearchObject {
 				for(int i =0;i<childStates.size();i++) {
 					SearchNode temp = new SearchNode(childStates.get(i),temp_current);
 					if(!explored.contains(temp)&&!frontier.contains(temp)){
+						if(p.isGoalState(temp.getState())){
+							path = temp.getPathFromRoot();
+							return path;
+						}
 						frontier.addNodeToBack(new SearchNode(childStates.get(i),temp_current));
 						System.out.println("X: " + childStates.get(i).m_x+ " Y: "+ childStates.get(i).m_y);
 						System.out.println("Frontier size" +frontier.size());
